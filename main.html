@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product-Detail</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background: linear-gradient(135deg, #11002d, #210144);
+        font-family: "Segoe UI", sans-serif;
+        color: white;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 40px 20px;
+      }
+
+      .title {
+        font-family: "A10_YoeShin", sans-serif;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: left;
+        margin-left: 20px; /* Aligns with carousel padding */
+        margin-bottom: 20px;
+      }
+
+      .carousel-wrapper {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .products {
+        display: flex;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        gap: 30px;
+        padding-bottom: 20px;
+      }
+
+      .products::-webkit-scrollbar {
+        display: none;
+      }
+
+      .product-card {
+        background-color: #1c0a38;
+        border-radius: 15px;
+        overflow: hidden;
+        width: 270px;
+        flex: 0 0 auto;
+        transition: transform 0.3s;
+      }
+
+      .product-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .product-card img {
+        width: 100%;
+        height: 340px;
+        object-fit: cover;
+      }
+
+      .product-content {
+        padding: 15px;
+      }
+
+      .product-category {
+        font-size: 12px;
+        color: #aaa;
+      }
+
+      .product-title {
+        margin: 5px 0;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .product-price {
+        color: #b980ff;
+        font-size: 16px;
+        font-weight: bold;
+      }
+      .price-discount-container {
+        display: flex;
+        align-items: center;
+        gap: 50px; /* Space between price and badge */
+      }
+      .glow-button {
+        position: relative;
+        transition: all 0.4s ease-in-out;
+        text-shadow: 0 0 6px #cfc5d9;
+        box-shadow: 0 0 8px rgba(207, 197, 217, 0.4),
+          inset 0 0 10px rgba(255, 255, 255, 0.05);
+      }
+
+      .glow-button:hover {
+        color: #fff;
+        transform: scale(1.05);
+        box-shadow: 0 0 18px rgba(207, 197, 217, 0.7),
+          0 0 30px rgba(132, 124, 149, 0.5),
+          inset 0 0 10px rgba(255, 255, 255, 0.1);
+      }
+
+      .glow-button::after {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        border-radius: 50px;
+        background: radial-gradient(
+          circle,
+          rgba(207, 197, 217, 0.3),
+          transparent
+        );
+        z-index: -1;
+        filter: blur(6px);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+
+      .glow-button:hover::after {
+        opacity: 1;
+      }
+      .discount-badge {
+        display: inline-block;
+        background: rgba(186, 134, 255, 0.1); /* Soft purple background */
+        border: 1px solid rgba(255, 255, 255, 0.1); /* Optional border for glassy effect */
+        padding: 6px 14px;
+        border-radius: 16px;
+        font-size: 12px;
+        color: #ccc;
+        font-weight: 600;
+        backdrop-filter: blur(8px); /* Optional: creates soft blur background */
+        box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05); /* Optional inner glow */
+        cursor: pointer;
+        transition: transform 0.2s ease, background-color 0.3s ease;
+      }
+      .discount-badge:hover {
+        background-color: #e84118;
+        transform: scale(1.05);
+      }
+
+      .discount-badge:active {
+        transform: scale(0.95);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+      }
+
+      .arrow {
+        position: absolute;
+        top: 45%;
+        transform: translateY(-50%);
+        background-color: #2a1143;
+        border: none;
+        color: white;
+        font-size: 28px;
+        cursor: pointer;
+        padding: 8px 12px;
+        z-index: 10;
+        border-radius: 50%;
+      }
+
+      .left-arrow {
+        left: 0;
+      }
+
+      .right-arrow {
+        right: 0;
+      }
+
+      footer {
+        background-color: #0a0019;
+        padding: 50px 20px 20px;
+        margin-top: 60px;
+        color: #ccc;
+      }
+
+      .btn {
+        background-color: #3c1d5d;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        margin-top: 10px;
+        cursor: pointer;
+      }
+
+      .navbar {
+        padding: 1rem 3rem;
+      }
+
+      .navbar-brand img {
+        left: 40px;
+        width: 140px;
+        z-index: 10;
+      }
+      .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+      }
+
+      .text {
+        color: #888;
+      }
+
+      .nav-link {
+        color: white !important;
+        margin: 0 1.2rem;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        border-radius: 16px;
+        cursor: pointer;
+        /* background: rgba(255, 255, 255, 0.05); */
+        transition: background 0.3s, transform 0.3s;
+        position: relative;
+        overflow: hidden;
+        text-decoration: none;
+      }
+      .user-info:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: scale(1.02);
+      }
+
+      .user-info img {
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        object-fit: cover;
+        border: 2px solid #ffd428;
+        transition: transform 0.3s ease;
+      }
+      .user-info:hover img {
+        transform: scale(1.1) rotate(3deg);
+      }
+
+      /* Ripple effect */
+      .user-info::after {
+        content: "";
+        position: absolute;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        transform: scale(0);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .user-info.clicked::after {
+        animation: ripple 0.6s ease-out;
+      }
+
+      .main-section {
+        padding: 2rem 4rem;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 3rem;
+      }
+
+      .product-image {
+        border-radius: 20px;
+        width: 100%;
+        max-width: 420px;
+        /* box-shadow: 0 10px 30px rgba(178, 125, 255, 0.3);
+        transition: transform 0.4s ease, box-shadow 0.4s ease; */
+        transition: all 0.4s ease;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        filter: brightness(0.97) saturate(1.2);
+        transform-style: preserve-3d;
+        will-change: transform, filter;
+      }
+      /* .product-image:hover {
+        transform: scale(1.03);
+        box-shadow: 0 15px 40px rgba(255, 255, 255, 0.2);
+      } */
+      .product-image:hover {
+        transform: scale(1.05) rotateX(3deg) rotateY(-3deg);
+        filter: brightness(1.1) saturate(1.4);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+      }
+
+      .product-preview-thumbs {
+        display: flex;
+        gap: 10px;
+        margin-top: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .product-preview-thumbs img {
+        height: 90px;
+        width: 100px;
+        object-fit: cover;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+        border: 2px solid transparent;
+      }
+
+      .product-preview-thumbs img:hover {
+        border-color: #b27dff;
+      }
+
+      .product-title {
+        font-size: 14px;
+        font-weight: 500;
+        font-family: inherit;
+      }
+      #main-footer {
+        margin-top: -60px;
+      }
+
+      .rating {
+        font-size: 1.1rem;
+        margin-top: 0.5rem;
+      }
+
+      .size-btn {
+        padding: 6px 16px;
+        margin: 0 8px 8px 0;
+        background: transparent;
+        border: 2px solid #888;
+        border-radius: 8px;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.85rem;
+      }
+
+      .size-btn.active,
+      .size-btn:hover {
+        background: #b27dff;
+        border-color: #b27dff;
+      }
+
+      .color-thumb {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 2px solid transparent;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+
+      .color-thumb.active,
+      .color-thumb:hover {
+        border-color: #b27dff;
+      }
+
+      .color-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .price-section {
+        font-size: 2.4rem;
+        font-weight: bold;
+        color: #d89eff;
+        display: block;
+      }
+
+      .price-details {
+        margin-top: 0.4rem;
+      }
+
+      .original-price {
+        text-decoration: line-through;
+        color: #aaa;
+        font-size: 1rem;
+        margin-right: 10px;
+      }
+
+      .discount {
+        color: #b27dff;
+        font-weight: 600;
+        font-size: 1rem;
+      }
+
+      .btn-buy,
+      .btn-cart {
+        padding: 12px 36px;
+        border-radius: 50px;
+        font-weight: bold;
+        font-size: 1rem;
+        border: none;
+        transition: all 0.3s ease;
+      }
+
+      .btn-buy {
+        background: #b27dff;
+        color: white;
+        margin-right: 16px;
+      }
+
+      .btn-buy:hover {
+        background: #c9aaff;
+      }
+
+      .btn-cart {
+        background: #3e276b;
+        color: white;
+      }
+
+      .btn-cart:hover {
+        background: #52307c;
+      }
+
+      .footer-icons {
+        margin-top: 3rem;
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .footer-icons img {
+        height: 26px;
+        opacity: 0.9;
+      }
+      .footer-icons img:hover {
+    transform: scale(1.1);
+  }
+      #foot {
+        max-width: 100px;
+        width: 80px;
+        height: 30px;
+      }
+      #product_card {
+        background: rgba(186, 134, 255, 0.1); /* Soft purple background */
+        border: 1px solid rgba(255, 255, 255, 0.1); /* Optional border for glassy effect */
+        backdrop-filter: blur(8px); /* Optional: creates soft blur background */
+        box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05); /* Optional inner glow */
+      }
+      .fancy-link {
+        position: relative;
+        font-weight: 500;
+        color: #ddd;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.4s ease;
+        padding: 8px 12px;
+        overflow: hidden;
+      }
+
+      .fancy-link::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        width: 0%;
+        height: 2px;
+        background: linear-gradient(90deg, #cfc5d9, #7b6e95);
+        transition: 0.4s ease-in-out;
+        transform: translateX(-50%);
+      }
+
+      .fancy-link:hover {
+        color: #fff;
+        text-shadow: 0 0 6px #cfc5d9;
+        transform: scale(1.05);
+      }
+
+      .fancy-link:hover::before {
+        width: 100%;
+      }
+
+      .fancy-link:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(207, 197, 217, 0.3);
+      }
+      .global-zay-button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 12px;
+        font-weight: bold;
+        color: #fff;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50px;
+        box-shadow: 0 4px 15px rgba(132, 124, 149, 0.2),
+          inset 0 0 10px rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(6px);
+        text-shadow: 0 0 3px #cfc5d9;
+        transition: all 0.4s ease;
+        max-width: 135px;
+        width: 118px;
+        max-height: 40px;
+        text-align: center;
+      }
+
+      .global-zay-button:hover {
+        background: rgba(132, 124, 149, 0.15);
+        box-shadow: 0 0 25px rgba(132, 124, 149, 0.5),
+          inset 0 0 15px rgba(255, 255, 255, 0.15);
+        transform: scale(1.05);
+        color: #f0eaff;
+      }
+      .main {
+  position: absolute;
+  background-image: url("./images/bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 870px;
+  width: 100%;
+  z-index: -1;
+}
+
+/* Header */
+.header_1 {
+  font-family: ysb, sans-serif;
+  font-size: 48px;
+}
+
+@media (min-width: 768px) {
+  .header_1 {
+    font-size: 60px;
+  }
+}
+
+@media (min-width: 992px) {
+  .header_1 {
+    font-size: 72px;
+  }
+}
+
+/* Input Group */
+.input-group {
+  font-family: ysr, sans-serif;
+  max-width: 360px;
+  background-color: rgba(255, 255, 255, 0.18);
+  padding: 5px 6px 5px 5px;
+  border-radius: 50px;
+  border: 0.5px solid #ffffff19;
+}
+
+.paste-input {
+  padding: 10px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: white;
+}
+
+.paste-input::placeholder {
+  color: #847c95;
+  font-size: 14px;
+}
+
+#search {
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 25px;
+  background: radial-gradient(circle at 60% 200%, rgba(255, 255, 255, 0.24), rgba(254, 254, 254, 0));
+  color: rgba(255, 255, 255, 0.806);
+  padding: 5px 25px;
+  font-size: 15px;
+}
+
+/* Star Text */
+.star {
+  font-family: ysr, sans-serif;
+  font-size: 14px;
+}
+
+/* Cards */
+.custom-card {
+  height: 250px;
+  background: linear-gradient(360deg, #654ba0, #1c0b41);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  border: 0.5px solid rgba(254, 254, 254, 0.33);
+}
+
+/* Shop Logos */
+.shop-logos img {
+  max-height: 60px;
+  object-fit: contain;
+}
+
+/* Responsive fixes */
+@media (max-width: 576px) {
+  .custom-card {
+    height: 180px;
+  }
+}
+
+
+      @font-face {
+        font-family: "A10_YoeShin";
+        src: url("Font/A10_YoeShin-Regular.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      @keyframes ripple {
+        0% {
+          transform: scale(0);
+          opacity: 0.6;
+        }
+        100% {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+      @media (max-width: 768px) {
+  .footer-icons {
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer-icons img {
+    margin-bottom: 10px;
+  }
+}
+      @media (max-width: 992px) {
+        .main-section {
+          padding: 2rem;
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+      @media (max-width: 768px) {
+    .product-image {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .main-section {
+      flex-direction: column;
+      padding: 1rem;
+      gap: 2rem;
+    }
+
+    .product-preview-thumbs img {
+      width: 70px;
+      height: 70px;
+    }
+
+    .btn-buy,
+    .btn-cart {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .price-section {
+      font-size: 1.8rem;
+    }
+
+    .price-details {
+      font-size: 0.9rem;
+    }
+
+    
+
+    
+
+    .carousel-wrapper {
+      padding: 0 10px;
+    }
+
+    .products {
+      gap: 15px;
+    }
+
+    .product-card {
+      width: 220px;
+    }
+
+    .container {
+      padding: 20px 10px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .navbar {
+      padding: 1rem;
+    }
+
+    .user-info {
+      padding: 8px;
+      font-size: 0.85rem;
+    }
+
+    .user-info img {
+      width: 36px;
+      height: 36px;
+    }
+
+    .main-section > div {
+      margin-top: 20px !important;
+    }
+  }
+    </style>
+  
+
+
+</head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+      <div
+        class="container-fluid d-flex justify-content-between align-items-center"
+      >
+        <a class="navbar-brand" href="#">
+          <img src="Global ZAY Logo.png" alt="Global Zay Logo" />
+        </a>
+        <!-- <div class="d-none d-lg-flex">
+          <a class="nav-link" href="#">Order</a>
+          <a class="nav-link" href="#">Wishlist</a>
+          <a class="nav-link" href="#">G-Wallet</a>
+          <a class="nav-link" href="#">Cart</a>
+        </div> -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapsible menu for all screen sizes -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+              <a class="nav-link fancy-link" href="order.html">Order</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fancy-link" href="wishilist.html">Wishlist</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fancy-link" href="g-wallet.html">G-Wallet</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fancy-link" href="cart.html">Cart</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fancy-link" href="AI.html">Customer Support</a>
+            </li>
+          </ul>
+        </div>
+       
+          <div class="user-info">
+            <div>
+              <div>Thandar Bo</div>
+              <small class="text">G-Member</small>
+            </div>
+            <a href="profile.html"><img src="user_profile.png" alt="User" /></div> </a>
+        
+      </div>
+    </nav>
+    
+    <main>
+      <div class="main"></div>
+
+      <!-- Home Page -->
+      <section class="container-fluid px-3 px-md-5">
+        <!-- Header Section -->
+        <div class="text-center pt-5 pb-4 m_header">
+          <header class="display-4 text-white header_1">
+            ဝယ်လိုရာရွေး <strong style="font-weight: bold">Global Zay</strong>
+          </header>
+          <p style="color: #d2d0dd" class="my-4">
+            South East Asia e-commerce company များထံမှ မြန်မာပြည်သူများအတွက် <br />
+            အလွယ်ကူဆုံး အဝယ်တော် Shopping Platform.
+          </p>
+
+          <!-- Paste Box -->
+          <div class="input-group mx-auto mb-3">
+            <input
+              type="text"
+              class="form-control paste-input"
+              placeholder="ဝယ်လိုရာ link ကိုဒီမှာချပါ"
+              aria-label="Product link"
+            />
+            <a href="product_detail.html">
+              <button id="search" class="btn btn-outline-secondary" type="button">
+                ရှာမည်
+              </button>
+            </a>
+          </div>
+
+          <!-- Instructions -->
+          <div class="star text-center mb-3 d-flex justify-content-center pb-5">
+            <div class="text-start" style="line-height: 25px; color: #ffffff7d">
+              ✧ Lazada, Shopee မှ ဝယ်လိုတဲ့ Product Page Link ကို Copy လုပ်ပါ။<br />
+              ✧ အပေါ်က link box မှာ paste ချပြီး ဆက်လက်ဝယ်ယူနိုင်ပါပြီ။
+            </div>
+          </div>
+        </div>
+
+        <!-- Cards -->
+        <div class="row g-4 justify-content-center">
+          <div class="col-12 col-sm-10 col-md-6 col-lg-5 d-flex justify-content-center">
+            <a href="product_detail.html" class="w-100 text-decoration-none">
+              <div class="card custom-card text-center w-100">
+                <img src="Card-1.png" alt="Lazada Logo" class="img-fluid" />
+              </div>
+            </a>
+          </div>
+        
+          <div class="col-12 col-sm-10 col-md-6 col-lg-5 d-flex justify-content-center">
+            <a href="product_detail.html" class="w-100 text-decoration-none">
+              <div class="card custom-card text-center w-100">
+                <img src="Card-2.png" alt="Shopee Logo" class="img-fluid" />
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Available Shop Logos -->
+       
+      </section>
+    </main>
+
+    <!-- Footer Icons -->
+    <div class="footer-icons">
+      <img alt="QNB" src="logo1.png"/>
+      <img alt="BMW" src="logo2.png"/>
+      <img alt="Delivery Hero" src="logo3.png"/>
+      <img alt="MediaMarkt" src="logo4.png"/>
+      <img alt="Bayer" src="logo5.png"/>
+      <img alt="Amazon" src="logo6.png"/>
+      </div>
+    <div class="container wow animate__fadeInDown">
+      <div class="title">လူကြိုက်များသော ပစ္စည်းများ</div>
+      <br />
+
+      <div class="carousel-wrapper">
+        <div class="products" id="carousel">
+          <!-- Product Cards -->
+          <div
+            class="product-card wow animate__zoomIn"
+            data-wow-delay="0.1s"
+            id="product_card"
+          >
+            <img src="Adidas x Mercedes.png" alt="Adidas" />
+            <div class="product-content">
+              <div class="product-category">Sport</div>
+              <div class="product-title">
+                Adidas x Mercedes Suite<br />(Gender Male)
+              </div>
+              <div class="price-discount-container">
+                <div class="product-price">560,000 Ks</div>
+                <div class="discount-badge">10% OFF</div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="product-card wow animate__zoomIn"
+            data-wow-delay="0.3s"
+            id="product_card"
+          >
+            <img src="Mercedes Tee.png" alt="Adidas" />
+            <div class="product-content">
+              <div class="product-category">Sport</div>
+              <div class="product-title">
+                Mercedes AMG Tee<br />(Gender Neutral)
+              </div>
+              <div class="price-discount-container">
+                <div class="product-price">420,000 Ks</div>
+                <div class="discount-badge">10% OFF</div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="product-card wow animate__zoomIn"
+            data-wow-delay="0.5s"
+            id="product_card"
+          >
+            <img src="Adidas Hoodie.png" alt="Adidas" />
+            <div class="product-content">
+              <div class="product-category">Fashion</div>
+              <div class="product-title">
+                Adidas Disney Mickey Mouse Hoodie for Kids<br />(Gender Neutral)
+              </div>
+              <div class="price-discount-container">
+                <div class="product-price">86,000 Ks</div>
+                <div class="discount-badge">5% OFF</div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="product-card wow animate__zoomIn"
+            data-wow-delay="0.5s"
+            id="product_card"
+          >
+            <img src="UEFA cup.png" alt="Adidas" />
+            <div class="product-content">
+              <div class="product-category">Football</div>
+              <div class="product-title">UEFA Cup Trophy<br /></div>
+              <div class="price-discount-container">
+                <div class="product-price">120,000 Ks</div>
+                <div class="discount-badge">6% OFF</div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="product-card wow animate__zoomIn"
+            data-wow-delay="0.5s"
+            id="product_card"
+          >
+            <img src="Predator.png" alt="Adidas" />
+            <div class="product-content">
+              <div class="product-category">Football</div>
+              <div class="product-title">
+                Adidas Predator<br />(Gender Neutral)
+              </div>
+              <div class="price-discount-container">
+                <div class="product-price">222,000 Ks</div>
+                <div class="discount-badge">5% OFF</div>
+              </div>
+            </div>
+          </div>
+          <!-- Add more product-card divs here as needed -->
+        </div>
+      </div>
+    </div>
+
+    <footer
+      class="bg-dark text-light py-5"
+      style="background: linear-gradient(to right, #0c021f, #140730)"
+    >
+      <div class="container">
+        <div class="row">
+          <!-- Left: Logo, text, button -->
+          <div class="col-md-4 mb-4" style="margin-top: -50px">
+            <img src="Global ZAY Logo.png" alt="Global Zay Logo" id="foot" style="max-width: 150px; height: auto;" />
+            <p
+              class="mt-3 mb-1"
+              style="
+                line-height: 1.6;
+                font-family: 'Roboto', sans-serif;
+                font-size: 16px;
+              "
+            >
+              Experience the next generation <br />
+              of E - commerce Company.
+            </p>
+            <a
+              href="#"
+              class="btn rounded-pill px-4 py-2 glow-button"
+              style="
+                background: rgba(132, 124, 149, 0.1);
+                color: #cfc5d9;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(5px);
+                font-size: 11px;
+                max-width: 135px;
+                width: 118px;
+                max-height: 40px;
+              "
+              >GLOBAL ZAY</a
+            >
+          </div>
+
+          <!-- Right: 4 columns of links -->
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-6 col-md-3 mb-3">
+                <h6 class="fw-bold">Product</h6>
+                <ul class="list-unstyled">
+                  <li>
+                    <a href="#" class="text-light text-decoration-none"
+                      >Lazada</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#" class="text-light text-decoration-none"
+                      >Shopee</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div class="col-6 col-md-3 mb-3">
+                <h6 class="fw-bold">Legals</h6>
+                <ul class="list-unstyled">
+                  <li>
+                    <a href="#" class="text-light text-decoration-none"
+                      >Terms of Services</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#" class="text-light text-decoration-none"
+                      >Privacy Policy</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div class="col-6 col-md-3 mb-3">
+                <h6 class="fw-bold">Support</h6>
+                <ul class="list-unstyled">
+                  <li>
+                    <a href="#" class="text-light text-decoration-none">Help</a>
+                  </li>
+                  <li>
+                    <a href="#" class="text-light text-decoration-none"
+                      >Customer Service</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div class="col-6 col-md-3 mb-3">
+                <h6 class="fw-bold">Follow us</h6>
+                <ul class="list-unstyled">
+                  <li>
+                    <a href="#" class="text-light text-decoration-none"
+                      >Facebook</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#" class="text-light text-decoration-none"
+                      >Telegram</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom: copyright + icons -->
+        <div
+          class="d-flex justify-content-between align-items-center mt-3 pt-2"
+        >
+          <p class="mb-0 small">©2025 Group 5, Inc.</p>
+          <div>
+            <a href="#" class="text-white me-3"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a href="#" class="text-white me-3"
+              ><i class="fab fa-youtube"></i
+            ></a>
+            <a href="#" class="text-white me-3"
+              ><i class="fab fa-linkedin"></i
+            ></a>
+            <a href="#" class="text-white me-3"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a href="#" class="text-white"><i class="fab fa-discord"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

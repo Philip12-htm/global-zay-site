@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>G-Wallet</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background: linear-gradient(135deg, #11002d, #210144);
+        font-family: "Segoe UI", sans-serif;
+        color: white;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 40px 20px;
+      }
+
+     
+
+      
+
+     
+
+      .discount-badge {
+        display: inline-block;
+        background: rgba(186, 134, 255, 0.1); /* Soft purple background */
+        border: 1px solid rgba(255, 255, 255, 0.1); /* Optional border for glassy effect */
+        padding: 6px 14px;
+        border-radius: 16px;
+        font-size: 12px;
+        color: #ccc;
+        font-weight: 600;
+        backdrop-filter: blur(8px); /* Optional: creates soft blur background */
+        box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05); /* Optional inner glow */
+        cursor: pointer;
+        transition: transform 0.2s ease, background-color 0.3s ease;
+      }
+      .discount-badge:hover {
+        background-color: #e84118;
+        transform: scale(1.05);
+      }
+
+      .discount-badge:active {
+        transform: scale(0.95);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+      }
+
+
+      .arrow {
+        position: absolute;
+        top: 45%;
+        transform: translateY(-50%);
+        background-color: #2a1143;
+        border: none;
+        color: white;
+        font-size: 28px;
+        cursor: pointer;
+        padding: 8px 12px;
+        z-index: 10;
+        border-radius: 50%;
+      }
+
+      .left-arrow {
+        left: 0;
+      }
+
+      .right-arrow {
+        right: 0;
+      }
+
+      footer {
+        
+        background-color: #0a0019;
+        padding: 50px 20px 20px;
+        margin-top: 60px;
+        color: #ccc;
+      }
+      footer, .container {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+      .btn {
+        background-color: #3c1d5d;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        margin-top: 10px;
+        cursor: pointer;
+      }
+
+      .navbar {
+        padding: 1rem 3rem;
+      }
+
+      .navbar-brand img {
+        left: 40px;
+        width: 140px;
+        z-index: 10;
+      }
+      .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+      }
+
+      .text {
+        color: #888;
+      }
+
+      .nav-link {
+        color: white !important;
+        margin: 0 1.2rem;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        border-radius: 16px;
+        cursor: pointer;
+        /* background: rgba(255, 255, 255, 0.05); */
+        transition: background 0.3s, transform 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+      .user-info:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: scale(1.02);
+      }
+
+      .user-info img {
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        object-fit: cover;
+        border: 2px solid #ffd428;
+        transition: transform 0.3s ease;
+      }
+      .user-info:hover img {
+        transform: scale(1.1) rotate(3deg);
+      }
+
+      /* Ripple effect */
+      .user-info::after {
+        content: "";
+        position: absolute;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        transform: scale(0);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .user-info.clicked::after {
+        animation: ripple 0.6s ease-out;
+      }
+
+      .footer-icons {
+        margin-top: 3rem;
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .footer-icons img {
+        height: 26px;
+        opacity: 0.9;
+      }
+      #foot {
+        max-width: 100px;
+        width: 80px;
+        height: 30px;
+      }
+      
+      
+       .status-btn {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  color: white;
+  backdrop-filter: blur(6px);
+  box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.05);
+  transition: transform 0.2s;
+}
+
+.status-btn:hover {
+  transform: scale(1.05);
+}
+
+.status-delivered {
+  background-color: rgba(0, 200, 83, 0.15); /* greenish glass */
+  color: #00e676;
+  border: 1px solid rgba(0, 200, 83, 0.3);
+}
+
+.status-delivering {
+  background-color: rgba(255, 214, 0, 0.15); /* yellowish glass */
+  color: white;
+  border: 1px solid white;
+}
+
+.status-cancelled {
+  background-color: rgba(255, 82, 82, 0.15); /* reddish glass */
+  color: #ff5252;
+  border: 1px solid rgba(255, 82, 82, 0.3);
+}
+.glow-button {
+  position: relative;
+  transition: all 0.4s ease-in-out;
+  text-shadow: 0 0 6px #cfc5d9;
+  box-shadow: 0 0 8px rgba(207, 197, 217, 0.4),
+              inset 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+.glow-button:hover {
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 0 18px rgba(207, 197, 217, 0.7),
+              0 0 30px rgba(132, 124, 149, 0.5),
+              inset 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.glow-button::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  border-radius: 50px;
+  background: radial-gradient(circle, rgba(207,197,217,0.3), transparent);
+  z-index: -1;
+  filter: blur(6px);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.glow-button:hover::after {
+  opacity: 1;
+}
+.fancy-link {
+  position: relative;
+  font-weight: 500;
+  color: #ddd;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.4s ease;
+  padding: 8px 12px;
+  overflow: hidden;
+}
+
+.fancy-link::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #cfc5d9, #7b6e95);
+  transition: 0.4s ease-in-out;
+  transform: translateX(-50%);
+}
+
+.fancy-link:hover {
+  color: #fff;
+  text-shadow: 0 0 6px #cfc5d9;
+  transform: scale(1.05);
+}
+
+.fancy-link:hover::before {
+  width: 100%;
+}
+
+.fancy-link:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(207, 197, 217, 0.3);
+}
+.wallet-card {
+        background: #2d014a;
+        border-radius: 20px;
+        padding: 30px;
+        margin-top: 30px;
+      }
+      .btn-purple {
+        background-color: #9e3dff;
+        color: white;
+        padding: 10px 30px;
+        border-radius: 15px;
+        border: none;
+        font-weight: bold;
+      }
+      .btn-purple:hover {
+        background-color: #7c2ad1;
+      }
+      .transaction-card {
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 20px;
+        padding: 20px;
+        margin-top: 20px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* subtle shadow for depth */
+        transition: all 0.3s ease;
+      }
+      .transaction-card:hover {
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .transaction-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .transaction-item:last-child {
+        margin-bottom: 0;
+      }
+      .amount-positive {
+        color: #bc8cff;
+      }
+      .amount-negative {
+        color: #ff5d5d;
+      }
+      .wallet-icon {
+        width: 25px;
+        margin-right: 10px;
+      }
+      .transaction-left {
+        display: flex;
+        align-items: center;
+      }
+      .section-label {
+        color: #c8a5ff;
+        font-weight: 600;
+        margin-top: 40px;
+        margin-bottom: 15px;
+        font-size: 1.2rem;
+      }
+
+
+      @font-face {
+        font-family: "A10_YoeShin";
+        src: url("Font/A10_YoeShin-Regular.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      @keyframes ripple {
+        0% {
+          transform: scale(0);
+          opacity: 0.6;
+        }
+        100% {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+
+      @media (max-width: 992px) {
+        .main-section {
+          padding: 2rem;
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    
+  .footer-icons {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-icons img {
+    height: 40px;
+    width: auto;
+    max-width: 100%;
+    opacity: 0.9;
+    transition: transform 0.2s;
+  }
+
+  .footer-icons img:hover {
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 768px) {
+    .footer-icons {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  #foot {
+    max-width: 100px;
+        width: 80px;
+        height: 30px;
+  }
+</style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+      <div
+        class="container-fluid d-flex justify-content-between align-items-center"
+      >
+        <a class="navbar-brand" href="#">
+          <img src="Global ZAY Logo.png" alt="Global Zay Logo" />
+        </a>
+        <!-- <div class="d-none d-lg-flex">
+          <a class="nav-link" href="#">Order</a>
+          <a class="nav-link" href="#">Wishlist</a>
+          <a class="nav-link" href="#">G-Wallet</a>
+          <a class="nav-link" href="#">Cart</a>
+        </div> -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapsible menu for all screen sizes -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+              <a class="nav-link fancy-link" href="order.html">Order</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fancy-link" href="wishilist.html">Wishlist</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fancy-link" href="g-wallet.html">G-Wallet</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fancy-link" href="cart.html">Cart</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link fancy-link" href="AI.html">Customer Support</a>
+              </li>
+            
+          </ul>
+        </div>
+
+        <div class="user-info">
+          <div>
+            <div>Thandar Bo</div>
+            <small class="text">G-Member</small>
+          </div>
+          <a href="profile.html"><img src="user_profile.png" alt="User" /></div> </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Footer Icons -->
+
+    <div class="container text-center mt-5">
+        <div class="animate__animated animate__fadeInDown">
+          <div><h3>
+            <img
+              src="user_profile.png"
+              alt="wallet"
+              style="width: 150px;"
+            /></div>
+            G-Wallet
+          </h3>
+          <p class="mt-3" style="opacity: 0.7">Total Balance</p>
+          <h1 class="fw-bold">230,000 Ks</h1>
+          <a href="g-wallet2.html" class="btn btn-purple mt-3">ငွေဖြည့်မည်</a>
+        </div>
+  
+        <div class="text-start section-label">ငွေဝင်/ထွက်မှတ်တမ်း</div>
+        <div class="transaction-card animate__animated animate__fadeInUp">
+          <div class="transaction-item">
+            <div class="transaction-left">
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/money.png"
+                class="wallet-icon"
+                alt="money"
+              />
+              <div>
+                <div>ငွေဖြည့်ခဲ့သည်</div>
+                <small style="opacity: 0.5">ယခု</small>
+              </div>
+            </div>
+            <div class="amount-positive">+2000,00 ကျပ်</div>
+          </div>
+          <div class="transaction-item">
+            <div class="transaction-left">
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/money.png"
+                class="wallet-icon"
+                alt="money"
+              />
+              <div>
+                <div>ငွေဖြည့်ခဲ့သည်</div>
+                <small style="opacity: 0.5">ယခု</small>
+              </div>
+            </div>
+            <div class="amount-positive">+2000,00 ကျပ်</div>
+          </div>
+          <div class="transaction-item">
+            <div class="transaction-left">
+              <img
+                src="https://img.icons8.com/ios-filled/50/ffffff/money.png"
+                class="wallet-icon"
+                alt="money"
+              />
+              <div>
+                <div>T-shirt (blue)</div>
+                <small style="opacity: 0.5">ယခု</small>
+              </div>
+            </div>
+            <div class="amount-negative">-50,000 ကျပ်</div>
+          </div>
+        </div>
+      </div>
+     
+
+        <div class="footer-icons">
+          <img src="logo1.png" alt="QNB" / style="height: 26px;">
+          <img src="logo2.png" alt="BMW" / style="height: 26px;">
+          <img src="logo3.png" alt="Delivery Hero" / style="height: 26px;">
+          <img src="logo4.png" alt="MediaMarkt" / style="height: 26px;">
+          <img src="logo5.png" alt="Bayer" / style="height: 26px;">
+          <img src="logo6.png" alt="Amazon" / style="height: 26px;">
+        </div>
+      </div>
+    </div>
+    <footer
+      class="bg-dark text-light py-5"
+      style="background: linear-gradient(to right, #0c021f, #140730)"
+    >
+      <div class="container">
+        <div class="row">
+          <!-- Left: Logo, text, button -->
+          <div class="col-md-4 mb-4" style="margin-top: -50px">
+            <img src="Global ZAY Logo.png" alt="Global Zay Logo" id="foot" style="max-width: 150px; height: auto;" />
+            <p
+              class="mt-3 mb-1"
+              style="
+                line-height: 1.6;
+                font-family: 'Roboto', sans-serif;
+                font-size: 16px;
+              "
+            >
+              Experience the next generation <br />
+              of E - commerce Company.
+            </p>
+            <a
+              href="main.html"
+              class="btn rounded-pill px-4 py-2 glow-button"
+              style="
+                background: rgba(132, 124, 149, 0.1);
+                color: #cfc5d9;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(5px);
+                font-size: 11px ;
+                max-width: 135px;
+                width: 118px;
+                max-height: 40px;
+              "
+              >GLOBAL ZAY</a
+            >
+          </div>
+
+          <!-- Right: 4 columns of links -->
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-6 col-md-3 mb-3">
+                <h6 class="fw-bold">Product</h6>
+                <ul class="list-unstyled">
+                  <li>
+                    <a href="#" class="text-light text-decoration-none"
+                      >Lazada</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#" class="text-light text-decoration-none"
+                      >Shopee</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div class="col-6 col-md-3 mb-3">
+                <h6 class="fw-bold">Legals</h6>
+                <ul class="list-unstyled">
+                  <li>
+                    <a href="#" class="text-light text-decoration-none"
+                      >Terms of Services</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#" class="text-light text-decoration-none"
+                      >Privacy Policy</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div class="col-6 col-md-3 mb-3">
+                <h6 class="fw-bold">Support</h6>
+                <ul class="list-unstyled">
+                  <li>
+                    <a href="#" class="text-light text-decoration-none">Help</a>
+                  </li>
+                  <li>
+                    <a href="#" class="text-light text-decoration-none"
+                      >Customer Service</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div class="col-6 col-md-3 mb-3">
+                <h6 class="fw-bold">Follow us</h6>
+                <ul class="list-unstyled">
+                  <li>
+                    <a href="#" class="text-light text-decoration-none"
+                      >Facebook</a
+                    >
+                  </li>
+                  <li>
+                    <a href="#" class="text-light text-decoration-none"
+                      >Telegram</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom: copyright + icons -->
+        <div
+          class="d-flex justify-content-between align-items-center mt-3 pt-2 "
+        >
+          <p class="mb-0 small">©2025 Group 5, Inc.</p>
+          <div>
+            <a href="#" class="text-white me-3"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a href="#" class="text-white me-3"
+              ><i class="fab fa-youtube"></i
+            ></a>
+            <a href="#" class="text-white me-3"
+              ><i class="fab fa-linkedin"></i
+            ></a>
+            <a href="#" class="text-white me-3"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a href="#" class="text-white"><i class="fab fa-discord"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
